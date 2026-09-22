@@ -1,5 +1,17 @@
 import java.util.Scanner;
-public class main{
+// no errors as far as I can tell and it fulfills all the requirements, good job - soha
+
+// Parker Comments:
+//  Code looks to abl1
+// e functioning, kinda hard to read though
+//  Lookin good
+
+//Wendy Wang
+//Great game, great code, pretty fun
+//be more specific with your instuctions  
+
+
+public class Main{
     private static final int POTIONS_PER_BATTLE = 4;
     private static final int POTION_HEAL = 40;
     private static final int BAR_LENGTH = 20;
@@ -19,7 +31,7 @@ public class main{
         String rivalName = "Null";
         System.out.println();
         System.out.println("Broke: Ah, and this is my grandson, " + rivalName+ ". He's been waiting all morning.");
-        System.out.println(rivalName + ": Took you long enough, " +name+ ". I was starting to think you'd crashed.");
+        System.out.println(rivalName + ": Took you long enough, " + name + ". I was starting to think you'd crashed.");
         // Starter Javamon selection
         System.out.println();
         System.out.println("Broke: Three Javamon, three types. Each one beats another, so choose carefully.");
