@@ -162,7 +162,7 @@ public class main
  
     // Prints name, level, HP, and an HP bar
     public static void printStatus(javamon m) {
-        System.out.printf("%-12s Lv%-3d HP %3d/%-3d [", m.getNickname(), m.getLevel(), m.getHp(), m.getMaxHp(), m.getDefense());
+        System.out.printf("%-12s Lv%-3d HP %3d/%-3d DEF %2d [", m.getNickname(), m.getLevel(), m.getHp(), m.getMaxHp(), m.getDefense());
  
         int filled = (int) (m.hpFraction() * BAR_LENGTH);
         if (m.getHp() > 0 && filled == 0) {
