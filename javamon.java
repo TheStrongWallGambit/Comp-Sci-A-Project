@@ -57,6 +57,10 @@ public class javamon {
         return type;
     }
 
+    public double hpFraction() {
+        return(double) hp/maxHp;
+    }
+
     public int getLevel() {
         return level;
     }

@@ -2,11 +2,14 @@ import java.util.Scanner;
 public class main
 
 {
+    private static final int POTIONS_PER_BATTLE = 4;
+    private static final int POTION_HEAL = 35;
+    private static final int BAR_LENGTH = 20;
     public static void main(String[]args)
     {
         //Intro to the game 
         Scanner input = new Scanner(System.in);
-        System.out.println("Hello there! Welcome to the world of Javamon!\n My name is Broke! People call me the Javamon Prof! This world is inhabited by creatures called Javamon!\n For some people, Javamon are used for codin. Others use them for fights.\n Myself… I study Javamon as a profession. First, what is your name?");
+        System.out.println("Hello there! Welcome to the world of Javamon!\n My name is Broke! People call me the Javamon Prof! This world is inhabited by creatures called Javamon!\n For some people, Javamon are used for coding. Others use them for fights.\n Myself… I study Javamon as a profession. First, what is your name?");
         // Player input's name
         String name = input.nextLine().trim();
         //Should the name be returned as empty it willrequest name again
@@ -27,11 +30,10 @@ public class main
         System.out.println(" 2) Intsect - Int type");
         System.out.println(" 3) Baboolean - Boolean type");
         
-        Strong choice = input.nextLine().trim();
-        while (!choice.equals("1") && ! choice.equals("2") & !choice.equals("3")){
-            System.out.printlin("Broke: Just ype 1, 2, or 3.";
+        String choice = input.nextLine().trim();
+        while (!choice.equals("1") && !choice.equals("2") && !choice.equals("3")) {
+            System.out.println("Broke: Just type 1, 2, or 3.");
             choice = input.nextLine().trim();
-            )
         }
         // Rival always picks the Javamon that beats yours: String>Boolean>Int>String
         javamon starter;
@@ -56,5 +58,122 @@ public class main
         System.out.println();
         System.out.println(name + " chose " + starter.getNickname() + "!");
         System.out.println(rivalName + ": Then I'll take " + rivalMon.getNickname() + ". Let's see what yours can do!");
+
+        // First rival battle
+        System.out.println();
+        System.out.println(rivalName + " wants to battle!");
+        if (battle(input, starter, rivalMon)) {
+            System.out.println(rivalName + ": What? I picked the type that beats yours!");
+        } else {
+            System.out.println(rivalName + ": Ha! Told you.");
+        }
+        
+        }
+    public static boolean battle(Scanner input, javamon player, javamon opponent) {
+        int potions = POTIONS_PER_BATTLE;
+        boolean forfeited = false;
+        int turn = 1;
+ 
+        // Faster Javamon attacks first; ties go to the player
+        boolean playerFirst = player.getSpeed() >= opponent.getSpeed();
+        if (playerFirst) {
+            System.out.println(player.getNickname() + " is faster and will attack first!");
+        } else {
+            System.out.println(opponent.getNickname() + " is faster and will attack first!");
+        }
+ 
+        while (!player.isFainted() && !opponent.isFainted() && !forfeited) {
+            System.out.println();
+            System.out.println("===== Turn " + turn + " =====");
+            printStatus(player);
+            printStatus(opponent);
+            System.out.println("1) Attack   2) Heal (" + potions + " left)   3) Forfeit");
+            String action = input.nextLine().trim();
+ 
+            if (action.equals("1")) {
+                // Both attack; speed decides the order
+                if (playerFirst) {
+                    attack(player, opponent);
+                    if (!opponent.isFainted()) {
+                        attack(opponent, player);
+                    }
+                } else {
+                    attack(opponent, player);
+                    if (!player.isFainted()) {
+                        attack(player, opponent);
+                    }
+                }
+            } else if (action.equals("2")) {
+                // Healing always happens before the rival attacks
+                if (potions > 0 && player.getHp() < player.getMaxHp()) {
+                    int before = player.getHp();
+                    player.heal(POTION_HEAL);
+                    potions -= 1;
+                    System.out.println(player.getNickname() + " healed " + (player.getHp() - before) + " HP!");
+                    attack(opponent, player);
+                } else if (potions == 0) {
+                    System.out.println("No potions left!");
+                    continue;   // turn not used
+                } else {
+                    System.out.println(player.getNickname() + " is already at full health!");
+                    continue;   // turn not used
+                }
+            } else if (action.equals("3")) {
+                forfeited = true;
+                continue;       // ends the battle right away
+            } else {
+                System.out.println("Type 1, 2, or 3.");
+                continue;       // turn not used
+            }
+            turn++;
+        }
+ 
+        System.out.println();
+        if (forfeited) {
+            System.out.println("You forfeited the battle.");
+            return false;
+        } else if (opponent.isFainted()) {
+            System.out.println(opponent.getNickname() + " fainted! You win!");
+            return true;
+        } else {
+            System.out.println(player.getNickname() + " fainted! You lose.");
+            return false;
+        }
+    }
+ 
+    // One attack: deals damage and prints what happened
+    public static void attack(javamon attacker, javamon defender) {
+        int damage = attacker.calculateDamage(defender);
+        defender.takeDamage(damage);
+        System.out.println(attacker.getNickname() + " attacks for " + damage + " damage!");
+ 
+        if (attacker.wasLastHitCritical()) {
+            System.out.println("A critical hit!");
+        }
+        double multiplier = attacker.typeMultiplier(defender.getType());
+        if (multiplier > 1.0) {
+            System.out.println("It's super effective!");
+        } else if (multiplier < 1.0) {
+            System.out.println("It's not very effective...");
+        }
+    }
+ 
+    // Prints name, level, HP, and an HP bar
+    public static void printStatus(javamon m) {
+        System.out.printf("%-12s Lv%-3d HP %3d/%-3d [", m.getNickname(), m.getLevel(), m.getHp(), m.getMaxHp());
+ 
+        int filled = (int) (m.hpFraction() * BAR_LENGTH);
+        if (m.getHp() > 0 && filled == 0) {
+            filled = 1;   // show a sliver
+        }
+        for (int i = 0; i < BAR_LENGTH; i++) {
+            if (i < filled) {
+                System.out.print("#");
+            } else {
+                System.out.print("-");
+            }
+        }
+        System.out.println("]");
+    }
 }
-}
+
