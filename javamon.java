@@ -126,7 +126,7 @@ public class javamon {
     // base damage, type, critical hit, random spread
     public int calculateDamage(javamon target) {
         // Defense blocks a random 30% to 50% of defense from the attack
-        double block = target.getDefense()* (0.3 + Math.random() *0.2)
+        double block = target.getDefense()* (0.3 + Math.random() *0.2);
         double damage = attack - block;
         damage *= typeMultiplier(target.getType());
 

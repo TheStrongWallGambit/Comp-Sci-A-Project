@@ -3,7 +3,7 @@ public class main
 
 {
     private static final int POTIONS_PER_BATTLE = 4;
-    private static final int POTION_HEAL = 35;
+    private static final int POTION_HEAL = 40;
     private static final int BAR_LENGTH = 20;
     public static void main(String[] args)
     {
@@ -17,7 +17,7 @@ public class main
             System.out.println("Come on, everyone has a name. What's yours?");
             name = input.nextLine().trim();
         }
-        System.out.println(name+"? That's a great name! Your very own Javamon legend is about to unfold!\n A world of dreams and adventures with Javamon awaits! Let’s go!");
+        System.out.println(name+"? That's a great name! Your very own Javamon legend is about to unfold!\n A world of dreams and adventures with Javamon awaits! Let's go!");
         // Rival Intro
         String rivalName = "Null";
         System.out.println();
@@ -50,7 +50,7 @@ public class main
         }
         System.out.println("Give your " + starter.getSpecies() + " a nickname? (press Enter to skip)");
         String nickname = input.nextLine().trim();
-            if (nickname.length() > 12) {
+        if (nickname.length() > 12) {
             nickname = nickname.substring(0, 12);   // keeps the HP display lined up
         }
         if (!nickname.isEmpty()) {
@@ -162,7 +162,7 @@ public class main
  
     // Prints name, level, HP, and an HP bar
     public static void printStatus(javamon m) {
-        System.out.printf("%-12s Lv%-3d HP %3d/%-3d [", m.getNickname(), m.getLevel(), m.getHp(), m.getMaxHp());
+        System.out.printf("%-12s Lv%-3d HP %3d/%-3d [", m.getNickname(), m.getLevel(), m.getHp(), m.getMaxHp(), m.getDefense());
  
         int filled = (int) (m.hpFraction() * BAR_LENGTH);
         if (m.getHp() > 0 && filled == 0) {
