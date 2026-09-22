@@ -1,7 +1,7 @@
 public class javamon {
     private static final double EFFECTIVE = 1.5; // Damage when type advantage
     private static final double INEFFECTIVE = 0.75; //Damage when type disadvantage
-    private static final double CRIT_CHANCE = 0.1; // 10% chance of a cticial hit
+    private static final double CRIT_CHANCE = 0.1; // 10% chance of a cricial hit
     private static final double CRIT_BONUS = 1.5;
     
 
@@ -38,10 +38,8 @@ public class javamon {
             speed = 10 + level + randomInRange(0, 3);
         }
         fainted = false;           // a new Javamon isn't fainted
-        lastHitCritical = false;
-
-    
-}
+        lastHitCritical = false;   
+    }
     private static int randomInRange(int min, int max) {
         return min + (int) (Math.random()* (max - min + 1));
     }

@@ -1,12 +1,9 @@
 import java.util.Scanner;
-public class main
-
-{
+public class main{
     private static final int POTIONS_PER_BATTLE = 4;
     private static final int POTION_HEAL = 40;
     private static final int BAR_LENGTH = 20;
-    public static void main(String[] args)
-    {
+    public static void main(String[] args){
         //Intro to the game 
         Scanner input = new Scanner(System.in);
         System.out.println("Hello there! Welcome to the world of Javamon!\n My name is Broke! People call me the Javamon Prof! This world is inhabited by creatures called Javamon!\n For some people, Javamon are used for coding. Others use them for fights.\n Myself. . .  I study Javamon as a profession. First, what is your name?");
