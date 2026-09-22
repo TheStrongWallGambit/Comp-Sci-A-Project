@@ -23,3 +23,34 @@ public class javamon {
         speed = 10 + level;
         fainted = false;           // a new Javamon isn't fainted
 }
+    public int getHp(){
+        return hp;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public boolean isFainted(){
+        return fainted
+    }
+    // Hp never goes below 0; 0 hp = fainted
+    public void takeDamage(int amount) {
+        hp -= amount ;
+        if (hp <= 0){
+            hp =0;
+            fainted = true;
+        }
+    }
+    // hp never goes above maxHp
+    public void heal(int amount) {
+        hp += amount;
+        if (hp > maxHp) {
+            hp = maxHp;
+        }
+    }
+
+    public void setNickname(String newName) {
+        nickname = newName;
+    }
+}
