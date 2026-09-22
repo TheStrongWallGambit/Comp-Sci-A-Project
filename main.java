@@ -35,22 +35,24 @@ public class main
             System.out.println("Broke: Just type 1, 2, or 3.");
             choice = input.nextLine().trim();
         }
-        // Rival always picks the Javamon that beats yours: String>Boolean>Int>String
+        // Rival always picks the Javamon that beats yours. String > boolean > int > String
         javamon starter;
         javamon rivalMon;
-        if (choice.equals("1")){
-            starter = new Javamon("Stirpent", "String", 5);
-            rivalMon = new Javamon("Intsect", "Int", 5);
-        }else if (choice.equals("1")){
-            starter = new Javamon("Intsect", "Int", 5);
-            rivalMon = new Javamon("Babooleam", "Boolean", 5);
-           
-        }if (choice.equals("1")){
-            starter = new Javamon("Baboolena", "Boolen", 5);
-            rivalMon = new Javamon("Stirpent", "5");
-    }
-        System.out.println("Give your " + starter.getNickname() + " a nickname? (press Enter to skip)");
+        if (choice.equals("1")) {
+            starter = new javamon("Strirpent", "String");
+            rivalMon = new javamon("Intsect", "int", 5);
+        } else if (choice.equals("2")) {
+            starter = new javamon("Intsect", "int");
+            rivalMon = new javamon("Baboolean", "boolean", 5);
+        } else {
+            starter = new javamon("Baboolean", "boolean");
+            rivalMon = new javamon("Strirpent", "String", 5);
+        }
+        System.out.println("Give your " + starter.getSpecies() + " a nickname? (press Enter to skip)");
         String nickname = input.nextLine().trim();
+                if (nickname.length() > 12) {
+            nickname = nickname.substring(0, 12);   // keeps the HP display lined up
+        }
         if (!nickname.isEmpty()) {
             starter.setNickname(nickname);
         }
