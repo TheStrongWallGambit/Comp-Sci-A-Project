@@ -3,6 +3,7 @@ public class javamon {
     private static final double INEFFECTIVE = 0.75; //Damage when type disadvantage
     private static final double CRIT_CHANCE = 0.1; // 10% chance of a cticial hit
     private static final double CRIT_BONUS = 1.5;
+    
 
     private String species; // what kind it is
     private String nickname; // what the player names it
@@ -124,7 +125,9 @@ public class javamon {
 
     // base damage, type, critical hit, random spread
     public int calculateDamage(javamon target) {
-        double damage = attack - target.getDefense() / 2;
+        // Defense blocks a random 30% to 50% of defense from the attack
+        double block = target.getDefense()* (0.3 + Math.random() *0.2)
+        double damage = attack - block;
         damage *= typeMultiplier(target.getType());
 
         lastHitCritical = Math.random() < CRIT_CHANCE;

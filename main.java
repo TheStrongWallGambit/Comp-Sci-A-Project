@@ -5,19 +5,19 @@ public class main
     private static final int POTIONS_PER_BATTLE = 4;
     private static final int POTION_HEAL = 35;
     private static final int BAR_LENGTH = 20;
-    public static void main(String[]args)
+    public static void main(String[] args)
     {
         //Intro to the game 
         Scanner input = new Scanner(System.in);
-        System.out.println("Hello there! Welcome to the world of Javamon!\n My name is Broke! People call me the Javamon Prof! This world is inhabited by creatures called Javamon!\n For some people, Javamon are used for coding. Others use them for fights.\n Myself… I study Javamon as a profession. First, what is your name?");
+        System.out.println("Hello there! Welcome to the world of Javamon!\n My name is Broke! People call me the Javamon Prof! This world is inhabited by creatures called Javamon!\n For some people, Javamon are used for coding. Others use them for fights.\n Myself. . .  I study Javamon as a profession. First, what is your name?");
         // Player input's name
         String name = input.nextLine().trim();
-        //Should the name be returned as empty it willrequest name again
+        //Should the name be returned as empty it will request name again
         while (name.isEmpty()) {
             System.out.println("Come on, everyone has a name. What's yours?");
             name = input.nextLine().trim();
         }
-        System.out.println(name+"? Thats a great name! Your very own Javamon legend is about to unfold!\n A world of dreams and adventures with Javamon awaits! Let’s go!");
+        System.out.println(name+"? That's a great name! Your very own Javamon legend is about to unfold!\n A world of dreams and adventures with Javamon awaits! Let’s go!");
         // Rival Intro
         String rivalName = "Null";
         System.out.println();
@@ -27,8 +27,8 @@ public class main
         System.out.println();
         System.out.println("Broke: Three Javamon, three types. Each one beats another, so choose carefully.");
         System.out.println(" 1) Strirpent - String type");
-        System.out.println(" 2) Intsect - Int type");
-        System.out.println(" 3) Baboolean - Boolean type");
+        System.out.println(" 2) Intsect - int type");
+        System.out.println(" 3) Baboolean - boolean type");
         
         String choice = input.nextLine().trim();
         while (!choice.equals("1") && !choice.equals("2") && !choice.equals("3")) {
@@ -50,7 +50,7 @@ public class main
         }
         System.out.println("Give your " + starter.getSpecies() + " a nickname? (press Enter to skip)");
         String nickname = input.nextLine().trim();
-                if (nickname.length() > 12) {
+            if (nickname.length() > 12) {
             nickname = nickname.substring(0, 12);   // keeps the HP display lined up
         }
         if (!nickname.isEmpty()) {
@@ -70,7 +70,7 @@ public class main
             System.out.println(rivalName + ": Ha! Told you.");
         }
         
-        }
+    }
     public static boolean battle(Scanner input, javamon player, javamon opponent) {
         int potions = POTIONS_PER_BATTLE;
         boolean forfeited = false;
