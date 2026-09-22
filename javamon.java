@@ -1,6 +1,6 @@
 public class javamon {
     private static final double EFFECTIVE = 1.5; // Damage when type advantage
-    private static final double INEFFECTIVE = 0.75; //Damage when type disandvantage
+    private static final double INEFFECTIVE = 0.75; //Damage when type disadvantage
     private static final double CRIT_CHANCE = 0.1; // 10% chance of a cticial hit
     private static final double CRIT_BONUS = 1.5;
 
@@ -14,12 +14,12 @@ public class javamon {
     private int defense;
     private int speed;
     private boolean fainted;
-    private boolean lastHitCritical; // Allows main to print "Citical hit"
+    private boolean lastHitCritical; // Allows main to print "Critical hit"
 
-    public Javamon(String species, String type){
+    public javamon(String species, String type){
         this(species, type, 5);
     }
-    public javamon(String species, String type, int level) {   // layer 3: the constructor
+    public javamon(String species, String type, int level) {   
         this.species = species;
         this.nickname = species;   // starts the same as species
         this.type = type;
@@ -46,7 +46,7 @@ public class javamon {
     }
     
     public String getSpecies(){
-        return species
+        return species;
     }
 
     public String getNickname() {
@@ -70,7 +70,7 @@ public class javamon {
     }
 
     public int getMaxHp() {
-        return maxHp
+        return maxHp;
     }
 
     public int getDefense() {
@@ -114,16 +114,16 @@ public class javamon {
         if ((type.equals("String") && defenderType.equals("boolean"))
                 || (type.equals("boolean") && defenderType.equals("int"))
                 || (type.equals("int") && defenderType.equals("String"))) {
-            return STRONG;
+            return EFFECTIVE;
         } else if (type.equals(defenderType)) {
             return 1.0;
         } else {
-            return WEAK;
+            return INEFFECTIVE;
         }
     }
 
     // base damage, type, critical hit, random spread
-    public int calculateDamage(Javamon target) {
+    public int calculateDamage(javamon target) {
         double damage = attack - target.getDefense() / 2;
         damage *= typeMultiplier(target.getType());
 
