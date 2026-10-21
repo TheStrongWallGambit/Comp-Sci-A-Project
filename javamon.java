@@ -1,4 +1,4 @@
-public class javamon {
+public class Javamon {
     private static final double EFFECTIVE = 1.5; // Damage when type advantage
     private static final double INEFFECTIVE = 0.75; //Damage when type disadvantage
     private static final double CRIT_CHANCE = 0.1; // 10% chance of a cricial hit
@@ -17,10 +17,10 @@ public class javamon {
     private boolean fainted;
     private boolean lastHitCritical; // Allows main to print "Critical hit"
 
-    public javamon(String species, String type){
+    public Javamon(String species, String type){
         this(species, type, 5);
     }
-    public javamon(String species, String type, int level) {   
+    public Javamon(String species, String type, int level) {   
         this.species = species;
         this.nickname = species;   // starts the same as species
         this.type = type;
@@ -122,7 +122,7 @@ public class javamon {
     }
 
     // base damage, type, critical hit, random spread
-    public int calculateDamage(javamon target) {
+    public int calculateDamage(Javamon target) {
         // Defense blocks a random 30% to 50% of defense from the attack
         double block = target.getDefense()* (0.3 + Math.random() *0.2);
         double damage = attack - block;

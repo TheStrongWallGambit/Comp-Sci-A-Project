@@ -45,17 +45,17 @@ public class Main{
             choice = input.nextLine().trim();
         }
         // Rival always picks the Javamon that beats yours. String > boolean > int > String
-        javamon starter;
-        javamon rivalMon;
+        Javamon starter;
+        Javamon rivalMon;
         if (choice.equals("1")) {
-            starter = new javamon("Strirpent", "String");
-            rivalMon = new javamon("Intsect", "int", 5);
+            starter = new Javamon("Strirpent", "String");
+            rivalMon = new Javamon("Intsect", "int", 5);
         } else if (choice.equals("2")) {
-            starter = new javamon("Intsect", "int");
-            rivalMon = new javamon("Baboolean", "boolean", 5);
+            starter = new Javamon("Intsect", "int");
+            rivalMon = new Javamon("Baboolean", "boolean", 5);
         } else {
-            starter = new javamon("Baboolean", "boolean");
-            rivalMon = new javamon("Strirpent", "String", 5);
+            starter = new Javamon("Baboolean", "boolean");
+            rivalMon = new Javamon("Strirpent", "String", 5);
         }
         System.out.println("Give your " + starter.getSpecies() + " a nickname? (press Enter to skip)");
         String nickname = input.nextLine().trim();
@@ -80,7 +80,7 @@ public class Main{
         }
         
     }
-    public static boolean battle(Scanner input, javamon player, javamon opponent) {
+    public static boolean battle(Scanner input, Javamon player, Javamon opponent) {
         int potions = POTIONS_PER_BATTLE;
         boolean forfeited = false;
         int turn = 1;
@@ -153,7 +153,7 @@ public class Main{
     }
  
     // One attack: deals damage and prints what happened
-    public static void attack(javamon attacker, javamon defender) {
+    public static void attack(Javamon attacker, Javamon defender) {
         int damage = attacker.calculateDamage(defender);
         defender.takeDamage(damage);
         System.out.println(attacker.getNickname() + " attacks for " + damage + " damage!");
@@ -170,7 +170,7 @@ public class Main{
     }
  
     // Prints name, level, HP, and an HP bar
-    public static void printStatus(javamon m) {
+    public static void printStatus(Javamon m) {
         System.out.printf("%-12s Lv%-3d HP %3d/%-3d DEF %2d [", m.getNickname(), m.getLevel(), m.getHp(), m.getMaxHp(), m.getDefense());
  
         int filled = (int) (m.hpFraction() * BAR_LENGTH);
