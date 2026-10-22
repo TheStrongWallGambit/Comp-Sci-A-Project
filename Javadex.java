@@ -1,24 +1,30 @@
+// Javadex: keeps track of every Javamon you catch and how many Javaballs you have
 public class Javadex {
+    // static because it counts every dex ever made, not just one
      private static int dexesIssued = 0;
 
+     // static because every dex has the same number of slots
      public static final int CAPACITY = 6;
-
+    
+     // static because the catch chance works the same for every dex
      private static final double CATCH_FLOOR = 0.2;
      private String owner;
      private Javamon[] caught;
      private int javaballs;
-
+     // makes an empty dex
+    // precondition: capacity > 0 and javaballs >= 0
+    // postcondition: every slot is empty (null) and the dex has that many javaballs
     public Javadex(String owner, int capacity, int javaballs) {
         this.owner = owner;
         this.caught = new Javamon[capacity];
         this.javaballs = javaballs;
         dexesIssued++;
     }
-
+    // normal dex with 6 slots
     public Javadex(String owner, int javaballs) {
         this(owner, CAPACITY, javaballs);
     }
-
+    // how many dexes Broke has handed out. static since it only uses dexesIssued
     public static int getDexesIssued() {
         return dexesIssued;
     }
@@ -36,7 +42,9 @@ public class Javadex {
             javaballs += amount;
         }
     }
-
+    // puts a Javamon in the first empty slot
+    // precondition: j isn't null
+    // postcondition: returns true if it was added, false if the dex is full (nothing changes)
     public boolean register(Javamon j) {
         for (int i = 0; i < caught.length; i++) {
             if (caught[i] == null) {
@@ -46,7 +54,9 @@ public class Javadex {
         }
         return false;
     }
-
+    // throws a javaball at a wild Javamon
+    // precondition: wild isn't null
+    // postcondition: uses up 1 javaball, returns true and adds it to the dex if it was caught
     public boolean tryCatch(Javamon wild) {
         if (javaballs == 0 || wild.isFainted() || countCaught() == caught.length) {
             return false;
@@ -100,7 +110,7 @@ public class Javadex {
         }
         return average(levels);
     }
-
+     // average of an int array. static since it only uses the array you pass in
     public static double average(int[] values) {
         if (values.length == 0) {
             return 0.0;
@@ -111,7 +121,7 @@ public class Javadex {
         }
         return (double) sum / values.length;
     }
-
+    // prints the dex with every Javamon on its own line
     public String toString() {
         String result = owner + "'s Javadex (" + countCaught() + "/" + caught.length + " caught, "
                 + javaballs + " Javaballs left)";
