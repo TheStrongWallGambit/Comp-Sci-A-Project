@@ -15,6 +15,11 @@ public class Main{
     private static final int POTIONS_PER_BATTLE = 4;
     private static final int POTION_HEAL = 40;
     private static final int BAR_LENGTH = 20;
+    private static final int STARTING_BALLS = 5;
+
+    // the 3 Javamon and their types, same index = same Javamon
+    private static final String[] SPECIES = {"Strirpent", "Intsect", "Baboolean"};
+    private static final String[] TYPES = {"String", "int", "boolean"};
     public static void main(String[] args){
         //Intro to the game 
         Scanner input = new Scanner(System.in);
@@ -71,6 +76,11 @@ public class Main{
         System.out.println(rivalName + ": Then I'll take " + rivalMon.getNickname() + ". Let's see what yours can do!");
 
         // First rival battle
+         System.out.println();
+        System.out.println("===== How to battle =====");
+        System.out.println("1) Attack  - deal damage. The faster Javamon hits first; type advantage does 1.5x damage.");
+        System.out.println("2) Heal    - restore " + POTION_HEAL + " HP, up to " + POTIONS_PER_BATTLE + " times. The rival still attacks that turn.");
+        System.out.println("3) Forfeit - give up the battle.");
         System.out.println();
         System.out.println(rivalName + " wants to battle!");
         if (battle(input, starter, rivalMon)) {
@@ -78,13 +88,121 @@ public class Main{
         } else {
             System.out.println(rivalName + ": Ha! Told you.");
         }
+
+        // Broke gives you the Javadex and javaballs
+        starter.restore();
+        System.out.println();
+        System.out.println("Broke: What a battle! I healed " + starter.getNickname() + " for you.");
+        System.out.println("Broke: Take this Javadex. It records every Javamon you catch, and here are " + STARTING_BALLS + " Javaballs.");
+        Javadex dex = new Javadex(name, STARTING_BALLS);
+        dex.register(starter);
+
+        // Catching instructions
+        System.out.println();
+        System.out.println("===== How to catch =====");
+        System.out.println("1) Attack        - weaken the wild Javamon. If it faints, it can't be caught.");
+        System.out.println("2) Throw Javaball - lower HP means a better chance: 20% at full HP, almost 100% near 0.");
+        System.out.println("3) Run           - leave the encounter.");
+
+        // Tall grass, keeps going until you leave, run out of javaballs, or faint
+        boolean exploring = true;
+        while (exploring) {
+            int k = (int) (Math.random() * SPECIES.length);
+            int wildLevel = 3 + (int) (Math.random() * 4); // level 3 to 6
+            Javamon wild = new Javamon(SPECIES[k], TYPES[k], wildLevel);
+
+            System.out.println();
+            System.out.println("You walk into the tall grass...");
+            if (Math.random() < 0.2) {
+                dex.addJavaballs(1);
+                System.out.println("You found a Javaball on the ground!");
+            }
+            if (dex.hasSpecies(wild.getSpecies())) {
+                System.out.println("A wild " + wild.getSpecies() + " (Lv" + wild.getLevel() + ") appeared! You've caught one before.");
+            } else {
+                System.out.println("A wild " + wild.getSpecies() + " (Lv" + wild.getLevel() + ") appeared! New to your Javadex!");
+            }
+            encounter(input, starter, wild, dex);
+
+            if (starter.isFainted()) {
+                System.out.println("You rushed back to Prof. Broke's lab.");
+                starter.restore();
+                exploring = false;
+            } else if (dex.getJavaballs() == 0) {
+                System.out.println("You're out of Javaballs, so you head back to the lab.");
+                exploring = false;
+            } else {
+                System.out.println("Keep exploring? (y/n)");
+                String answer = input.nextLine().trim();
+                while (!answer.equalsIgnoreCase("y") && !answer.equalsIgnoreCase("n")) {
+                    System.out.println("Just type y or n.");
+                    answer = input.nextLine().trim();
+                }
+                exploring = answer.equalsIgnoreCase("y");
+            }
+        }
+
+        // Shows the Javadex at the end
+        System.out.println();
+        System.out.println(dex);
+        System.out.printf("Average level: %.1f%n", dex.averageLevel());
+        System.out.println("Highest level: " + dex.highestLevel().getSpecies() + " (Lv" + dex.highestLevel().getLevel() + ")");
+        System.out.println("Broke: Javadexes handed out so far: " + Javadex.getDexesIssued() + ". Good luck, " + dex.getOwner() + "!");
         
     }
     public static boolean battle(Scanner input, Javamon player, Javamon opponent) {
         int potions = POTIONS_PER_BATTLE;
         boolean forfeited = false;
         int turn = 1;
- 
+            // Wild encounter, ends when you catch it, it faints, you run, or you faint
+        public static void encounter(Scanner input, Javamon player, Javamon wild, Javadex dex) {
+        boolean over = false;
+        while (!over) {
+            System.out.println();
+            printStatus(player);
+            printStatus(wild);
+            System.out.println("1) Attack   2) Throw Javaball (" + dex.getJavaballs() + " left)   3) Run");
+            String action = input.nextLine().trim();
+
+            if (action.equals("1")) {
+                attack(player, wild);
+                if (wild.isFainted()) {
+                    System.out.println("The wild " + wild.getSpecies() + " fainted. Too weak to catch now!");
+                    over = true;
+                    continue;
+                }
+            } else if (action.equals("2")) {
+                if (dex.getJavaballs() == 0) {
+                    System.out.println("You're out of Javaballs!");
+                    continue;   // turn not used
+                } else if (dex.countCaught() == Javadex.CAPACITY) {
+                    System.out.println("Your Javadex is full!");
+                    continue;   // turn not used
+                }
+                System.out.println("You threw a Javaball...");
+                if (dex.tryCatch(wild)) {
+                    System.out.println("Gotcha! " + wild.getSpecies() + " was added to your Javadex!");
+                    over = true;
+                    continue;
+                }
+                System.out.println("Oh no! It broke free!");
+            } else if (action.equals("3")) {
+                System.out.println("You got away safely.");
+                over = true;
+                continue;
+            } else {
+                System.out.println("Type 1, 2, or 3.");
+                continue;   // turn not used
+            }
+
+            // wild Javamon attacks back
+            attack(wild, player);
+            if (player.isFainted()) {
+                System.out.println(player.getNickname() + " fainted!");
+                over = true;
+            }
+        }
+    }
         // Faster Javamon attacks first; ties go to the player
         boolean playerFirst = player.getSpeed() >= opponent.getSpeed();
         if (playerFirst) {
@@ -150,6 +268,7 @@ public class Main{
             System.out.println(player.getNickname() + " fainted! You lose.");
             return false;
         }
+
     }
  
     // One attack: deals damage and prints what happened

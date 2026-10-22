@@ -108,6 +108,11 @@ public class Javamon {
             hp = maxHp;
         }
     }
+    // full heal at the lab, also un-faints it
+    public void restore() {
+        hp = maxHp;
+        fainted = false;
+    }
     //String > boolean > int > string
     public double typeMultiplier(String defenderType){
         if ((type.equals("String") && defenderType.equals("boolean"))
