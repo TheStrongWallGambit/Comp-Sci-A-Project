@@ -1,17 +1,17 @@
 // Javadex: keeps track of every Javamon you catch and how many Javaballs you have
 public class Javadex {
     // static because it counts every dex ever made, not just one
-     private static int dexesIssued = 0;
+    private static int dexesIssued = 0;
 
-     // static because every dex has the same number of slots
-     public static final int CAPACITY = 6;
+    // static because every dex has the same number of slots
+    public static final int CAPACITY = 6;
     
-     // static because the catch chance works the same for every dex
-     private static final double CATCH_FLOOR = 0.2;
-     private String owner;
-     private Javamon[] caught;
-     private int javaballs;
-     // makes an empty dex
+    // static because the catch chance works the same for every dex
+    private static final double CATCH_FLOOR = 0.2;
+    private String owner;
+    private Javamon[] caught;
+    private int javaballs;
+    // makes an empty dex
     // precondition: capacity > 0 and javaballs >= 0
     // postcondition: every slot is empty (null) and the dex has that many javaballs
     public Javadex(String owner, int capacity, int javaballs) {
@@ -28,7 +28,7 @@ public class Javadex {
     public static int getDexesIssued() {
         return dexesIssued;
     }
-   // owner's name
+    // owner's name
     public String getOwner() {
         return owner;
     }

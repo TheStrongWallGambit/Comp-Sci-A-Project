@@ -244,7 +244,7 @@ public class Main{
 
     }
     // Wild encounter, ends when you catch it, it faints, you run, or you faint
-        public static void encounter(Scanner input, Javamon player, Javamon wild, Javadex dex) {
+    public static void encounter(Scanner input, Javamon player, Javamon wild, Javadex dex) {
         boolean over = false;
         while (!over) {
             System.out.println();
