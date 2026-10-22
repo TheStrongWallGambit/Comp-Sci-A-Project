@@ -28,15 +28,15 @@ public class Javadex {
     public static int getDexesIssued() {
         return dexesIssued;
     }
-
+   // owner's name
     public String getOwner() {
         return owner;
     }
-
+    // javaballs left
     public int getJavaballs() {
         return javaballs;
     }
-
+    // adds javaballs, ignores negative numbers
     public void addJavaballs(int amount) {
         if (amount > 0) {
             javaballs += amount;
@@ -69,7 +69,7 @@ public class Javadex {
         }
         return false;
     }
-
+    // how many Javamon are in the dex
     public int countCaught() {
         int count = 0;
         for (Javamon j : caught) {
@@ -79,7 +79,7 @@ public class Javadex {
         }
         return count;
     }
-
+    // true if you've already caught that species
     public boolean hasSpecies(String species) {
         for (Javamon j : caught) {
             if (j != null && j.getSpecies().equals(species)) {
@@ -88,7 +88,7 @@ public class Javadex {
         }
         return false;
     }
-
+    // highest level Javamon in the dex, null if it's empty
     public Javamon highestLevel() {
         Javamon best = null;
         for (Javamon j : caught) {
@@ -98,7 +98,7 @@ public class Javadex {
         }
         return best;
     }
-
+       // average level of everything in the dex, 0 if empty
     public double averageLevel() {
         int[] levels = new int[countCaught()];
         int index = 0;

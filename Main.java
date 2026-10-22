@@ -1,3 +1,24 @@
+// Planning notes for Part 2
+// My second class is the Javadex. Broke gives it to you after the rival battle
+// It keeps track of every Javamon you catch and how many javaballs you have left
+// Javadex has a Javamon array so it works with my Javamon class
+// register and tryCatch both take in a Javamon
+//Arrays
+// Javamon[] caught is made with new Javamon[capacity]
+// SPECIES and TYPES in Main use an initializer list, they pick what wild Javamon shows up
+// averageLevel makes an int array of all the levels
+//this
+// this.owner = owner in the constructor
+// this(owner, CAPACITY, javaballs) so the 2nd constructor calls the 1st one
+//Static
+// dexesIssued counts every dex made so it has to be shared
+// average only uses the array you give it so it doesnt need an object
+// Algorithms are countCaught, hasSpecies, highestLevel and average
+// After the rival battle you go into the grass and fight a wild Javamon
+// Lower its hp before you throw a javaball since that makes it easier to catch
+// You keep exploring until you leave, run out of javaballs or faint
+// At the end it shows your Javadex with the average and highest level
+// Things to test: typing wrong menu options, running out of javaballs, a full dex, and the wild one fainting before you catch it
 import java.util.Scanner;
 // no errors as far as I can tell and it fulfills all the requirements, good job - soha
 
